@@ -22,7 +22,7 @@ def listAllCoins(request):
             response = requests.get(url)
             response.raise_for_status()
             coins = response.json()
-            cache.set(cache_key, coins, 60*15)
+            cache.set(cache_key, coins, 60*60)
         except requests.exceptions.RequestException as error:
             request.error = str(error)
             return render(request, "main/index.html")

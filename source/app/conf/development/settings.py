@@ -145,6 +145,6 @@ CACHEOPS_DEFAULTS = {
 }
 
 CACHEOPS = {
-    'auth.user': {'ops': 'get', 'timeout': 60*15},
-    '*.*': {'ops': 'all', 'timeout': 60*15},
+    'auth.user': {'ops': 'get', 'timeout': 60*60},
+    '*.*': {'ops': 'all', 'timeout': 60*60},
 }

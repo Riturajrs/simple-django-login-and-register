@@ -11,11 +11,22 @@
 
         {% trans 'Your username is' %} <b>{{ request.user.username }}</b>.
 
-
-        {% for coins in request.coins %}
-            {{ coins }}
-        {% endfor %}
-    
+        <div class="grid-container">
+            {% for coin in request.coins %}
+            <div class="card">
+                <h3>{{ coin.name }}</h3>
+                <p><strong>ID:</strong> {{ coin.id }}</p>
+                <p><strong>Symbol:</strong> {{ coin.symbol }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            <a href="/coins/all-coins?page_num={{request.page_number|add:-1}}" 
+            class="{% if request.page_number == 1 %}disabled{% endif %}">prev</a>
+            {{ page_number }}
+            <a href="/coins/all-coins?page_num={{request.page_number|add:1}}">next</a>
+        </div>
+        
     {% else %}
 
         {% trans 'You are a guest.' %}
