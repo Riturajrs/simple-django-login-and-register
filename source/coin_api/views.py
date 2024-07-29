@@ -37,6 +37,7 @@ def listAllCoins(request):
     
     request.coins = paginated_coins
     request.page_number = page_number
+    request.last_page = (end_index >= len(coins))
     
     return render(request, "main/index.html")
 
