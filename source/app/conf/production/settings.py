@@ -10,6 +10,8 @@ SECRET_KEY = '3d305kajG5Jy8KBafCMpHwDIsNi0SqVaW'
 DEBUG = False
 ALLOWED_HOSTS = [
     'example.com',
+    'localhost',
+    '127.0.0.1'
 ]
 
 SITE_ID = 1
@@ -24,10 +26,12 @@ INSTALLED_APPS = [
 
     # Vendor apps
     'bootstrap4',
+    'rest_framework',
 
     # Application apps
     'main',
     'accounts',
+    'coin_api',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +144,12 @@ if DISABLE_USERNAME:
     SIGN_UP_FIELDS = ['first_name', 'last_name', 'email', 'password1', 'password2']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CACHEOPS_DEFAULTS = {
+    'timeout': 60*15
+}
+
+CACHEOPS = {
+    'auth.user': {'ops': 'get', 'timeout': 60*60},
+    '*.*': {'ops': 'all', 'timeout': 60*60},
+}
