@@ -10,7 +10,11 @@
     {% if request.user.is_authenticated %}
 
         {% trans 'Your username is' %} <b>{{ request.user.username }}</b>.
-
+        {% if request.coins is None %}
+        <div class="button-wrapper">
+            <a href="/coins/all-coins">Load coins</a>
+        </div>    
+        {% else %}
         <div class="grid-container">
             {% for coin in request.coins %}
             <div class="card">
@@ -20,12 +24,14 @@
             </div>
             {% endfor %}
         </div>
-        <div class="pagination">
+        <div class="button-wrapper">
             <a href="/coins/all-coins?page_num={{request.page_number|add:-1}}" 
-            class="{% if request.page_number == 1 %}disabled{% endif %}">prev</a>
-            {{ page_number }}
-            <a href="/coins/all-coins?page_num={{request.page_number|add:1}}">next</a>
+            class="{% if request.page_number <= 1 %}disabled{% endif %}">prev</a>
+            {{ request.page_number }}
+            <a href="/coins/all-coins?page_num={{request.page_number|add:1}}"
+            class="{% if request.page_number <= 0 %}disabled{% endif %}">next</a>
         </div>
+        {% endif %}
         
     {% else %}
 
