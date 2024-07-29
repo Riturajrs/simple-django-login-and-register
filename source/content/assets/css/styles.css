@@ -18,6 +18,10 @@
 .card p {
     margin: 5px 0;
 }
+.card a {
+    text-decoration: none;
+    color: #007bff;
+}
 .button-wrapper {
     display: flex;
     justify-content: center;

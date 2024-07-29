@@ -13,6 +13,9 @@ def ping(request):
         return Response('Un-authenticated')
 
 def listAllCoins(request):
+    if not request.user.is_authenticated:
+        PermissionError("Unauthenticated user!")
+
     url = "https://api.coingecko.com/api/v3/coins/list"
     cache_key = 'coins_list'
     coins = cache.get(cache_key)
@@ -35,4 +38,25 @@ def listAllCoins(request):
     request.coins = paginated_coins
     request.page_number = page_number
     
+    return render(request, "main/index.html")
+
+def getCoinDetails(request):
+    if not request.user.is_authenticated:
+        PermissionError("Unauthenticated user!")
+    coin_id = request.GET.get("coin_id", "bitcoin")
+    url = f"https://api.coingecko.com/api/v3/coins/{coin_id}"
+    cache_key = 'coin_ids'
+    coin_details = cache.get(cache_key)
+
+    if not coin_details:
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            coin_details = response.json()
+            cache.set(cache_key, coin_details, 60*60)
+        except requests.exceptions.RequestException as error:
+            request.error = str(error)
+            return render(request, "main/index.html")
+
+    request.coin_details = coin_details    
     return render(request, "main/index.html")
