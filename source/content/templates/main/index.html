@@ -4,10 +4,18 @@
 
 {% block content %}
 
+    {% if request.error %}
+        An error occurred: {{ request.error }}
+    {% endif %}
     {% if request.user.is_authenticated %}
 
         {% trans 'Your username is' %} <b>{{ request.user.username }}</b>.
 
+
+        {% for coins in request.coins %}
+            {{ coins }}
+        {% endfor %}
+    
     {% else %}
 
         {% trans 'You are a guest.' %}

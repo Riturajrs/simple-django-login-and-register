@@ -15,7 +15,7 @@ urlpatterns = [
 
     path('accounts/', include('accounts.urls')),
     
-    path('api', include('coin_api.urls')),
+    path('coins/', include('coin_api.urls')),
 ]
 
 if settings.DEBUG:

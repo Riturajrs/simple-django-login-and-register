@@ -1,3 +1,38 @@
+import requests
 from django.shortcuts import render
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from django.core.cache import cache
 
-# Create your views here.
+
+@api_view(['GET'])
+def ping(request):
+    if request.user.is_authenticated:
+        return Response('Authenticated')
+    else:
+        return Response('Un-authenticated')
+
+def listAllCoins(request):
+    url = "https://api.coingecko.com/api/v3/coins/list"
+    cache_key = 'coins_list'
+    coins = cache.get(cache_key)
+
+    if not coins:
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            coins = response.json()
+            cache.set(cache_key, coins, 60*15)
+        except requests.exceptions.RequestException as error:
+            request.error = str(error)
+            return render(request, "main/index.html")
+
+    page_number = int(request.GET.get("page_num", 1))
+    start_index = (page_number - 1) * 10
+    end_index = start_index + 10
+    paginated_coins = coins[start_index:end_index]
+    
+    request.coins = paginated_coins
+    request.page_number = page_number
+    
+    return render(request, "main/index.html")

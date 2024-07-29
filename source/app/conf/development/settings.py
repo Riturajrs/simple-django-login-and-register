@@ -139,3 +139,12 @@ LOCALE_PATHS = [
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CACHEOPS_DEFAULTS = {
+    'timeout': 60*15
+}
+
+CACHEOPS = {
+    'auth.user': {'ops': 'get', 'timeout': 60*15},
+    '*.*': {'ops': 'all', 'timeout': 60*15},
+}
