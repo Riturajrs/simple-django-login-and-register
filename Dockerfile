@@ -1,21 +1,17 @@
-FROM python:3.12
+FROM public.ecr.aws/lambda/python:3.12
 
-ENV IS_PRODUCTION True
+WORKDIR ${LAMBDA_TASK_ROOT}
 
-WORKDIR /crypto
-
-COPY pyproject.toml poetry.lock /crypto/
+COPY pyproject.toml poetry.lock ${LAMBDA_TASK_ROOT}/
 
 RUN pip install --upgrade pip && pip install poetry
 
 RUN poetry install -vvv
 
-COPY . /crypto/
+COPY . ${LAMBDA_TASK_ROOT}/
 
-ENV PYTHONPATH=/crypto/source
+ENV PYTHONPATH=${LAMBDA_TASK_ROOT}/source
 
 RUN poetry run python source/manage.py collectstatic --noinput
 
-EXPOSE 8000
-
-CMD ["poetry", "run", "gunicorn", "app.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["app.lambda_handler"]

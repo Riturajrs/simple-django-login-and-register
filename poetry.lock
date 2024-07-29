@@ -15,6 +15,17 @@ files = [
 tests = ["mypy (>=0.800)", "pytest", "pytest-asyncio"]
 
 [[package]]
+name = "aws-lambda-wsgi"
+version = "0.0.6"
+description = "AWS Lambda WSGI - WSGI adapter for AWS API Gateway/Lambda Proxy Integration"
+optional = false
+python-versions = "*"
+files = [
+    {file = "aws_lambda_wsgi-0.0.6-py3-none-any.whl", hash = "sha256:28669d8168a46b49a77ba127711f4db05ccd35379bbcbcc28ef515b9c8ce0c67"},
+    {file = "aws_lambda_wsgi-0.0.6.tar.gz", hash = "sha256:54ac15c5586f72b1429253bdcb487b7214a348713fd0034de7d45e849224e893"},
+]
+
+[[package]]
 name = "beautifulsoup4"
 version = "4.12.3"
 description = "Screen-scraping library"
@@ -319,4 +330,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "56f820b52e7717d3b5b774d31a8d3132d0569cec6dc106d4f16fb9d8aa295460"
+content-hash = "f39b3d6b3d892c8b79f41fd1f2b8dbb6da97cad8b7a97b499cf5731840566c52"
