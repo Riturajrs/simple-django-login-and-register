@@ -45,7 +45,7 @@ def getCoinDetails(request):
         PermissionError("Unauthenticated user!")
     coin_id = request.GET.get("coin_id", "bitcoin")
     url = f"https://api.coingecko.com/api/v3/coins/{coin_id}"
-    cache_key = 'coin_ids'
+    cache_key = {coin_id}
     coin_details = cache.get(cache_key)
 
     if not coin_details:
@@ -59,4 +59,4 @@ def getCoinDetails(request):
             return render(request, "main/index.html")
 
     request.coin_details = coin_details    
-    return render(request, "main/index.html")
+    return render(request, "main/coin-details.html")

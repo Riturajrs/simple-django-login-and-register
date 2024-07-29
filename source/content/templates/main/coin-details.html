@@ -1,0 +1,44 @@
+{% extends 'layouts/default/page.html' %}
+
+{% load i18n %}
+
+<!-- {% load static %} -->
+
+
+{% block content %}
+<div class="container">
+    <header>
+        <img id="coin-image" src="{{ request.coin_details.image.large }}" alt="Bitcoin">
+        <h1 id="coin-name">{{ request.coin_details.name }}</h1>
+        <p id="coin-symbol">{{ request.coin_details.symbol }}</p>
+    </header>
+    <section>
+        <h2>General Information</h2>
+        <p id="coin-description">{{ request.coin_details.description.en|safe }}</p>
+        <ul id="coin-categories">
+            {% for category in request.coin_details.categories %}
+                <li>{{ category }}</li>
+            {% endfor %}
+        </ul>
+        <p>Hashing Algorithm: <span id="coin-hashing-algorithm">{{ request.coin_details.hashing_algorithm }}</span></p>
+        <p>Block Time: <span id="coin-block-time">{{ request.coin_details.block_time_in_minutes }}</span> minutes</p>
+    </section>
+    <section>
+        <h2>Links</h2>
+        <p><a id="homepage-link" href="{{ request.coin_details.links.homepage.0 }}" target="_blank">Homepage</a></p>
+        <p><a id="whitepaper-link" href="{{ request.coin_details.links.whitepaper }}" target="_blank">Whitepaper</a></p>
+        <p>Blockchain Sites:</p>
+        <ul id="blockchain-sites">
+            {% for site in request.coin_details.links.blockchain_site %}
+                {% if site %}
+                    <li><a href="{{ site }}" target="_blank">{{ site }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </section>
+    <section>
+        <h2>Market Data</h2>
+        <p>Current Price (USD): <span id="current-price-usd">{{ request.coin_details.market_data.current_price.usd }}</span></p>
+    </section>
+</div>
+{% endblock %}

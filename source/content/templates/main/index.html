@@ -9,22 +9,18 @@
     {% endif %}
     {% if request.user.is_authenticated %}
 
-        {% trans 'Your username is' %} <b>{{ request.user.username }}</b>.
-        {% if request.coins is None %}
-        <div class="button-wrapper">
-            <a href="/coins/all-coins">Load coins</a>
-        </div>    
-        {% else %}
+    {% trans 'Your username is' %} <b>{{ request.user.username }}</b>.
+    {% if request.coins %}
         <div class="grid-container">
             {% for coin in request.coins %}
             <div class="card">
                 <h3>{{ coin.name }}</h3>
                 <p><strong>ID:</strong> {{ coin.id }}</p>
                 <p><strong>Symbol:</strong> {{ coin.symbol }}</p>
-                <a href="#">
-                Details
+                <a href="/coins/coin-details?coin_id={{coin.id}}">
+                    Details
                 </a>
-                </div>
+            </div>
             {% endfor %}
         </div>
         <div class="button-wrapper">
@@ -34,6 +30,10 @@
             <a href="/coins/all-coins?page_num={{request.page_number|add:1}}"
             class="{% if request.page_number <= 0 %}disabled{% endif %}">next</a>
         </div>
+    {% else %}
+        <div class="button-wrapper">
+            <a href="/coins/all-coins">Load coins</a>
+        </div>    
         {% endif %}
         
     {% else %}
